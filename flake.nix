@@ -37,7 +37,7 @@
         };
         packages.default = pkgs.callPackage ./package.nix { };
         packages.dockerImage = pkgs.dockerTools.buildImage {
-          inherit name;
+          name = "fergriv/${name}";
           tag = "latest";
           config = {
             Cmd = [ "${self.packages.x86_64-linux.default}/bin/dataload_test" ];

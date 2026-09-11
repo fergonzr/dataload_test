@@ -2,7 +2,7 @@ import os
 
 from sqlmodel import create_engine
 
-database_driver = os.environ["DB_DRIVER"] or "sqlite"
+database_driver = os.environ.get("DB_DRIVER") or "sqlite"
 
 match database_driver:
     case "sqlite":
@@ -12,11 +12,11 @@ match database_driver:
     case _:
         database_connector = "sqlite"
 
-database_password = os.environ["DB_PASS"] or "secretpassword"
-database_user = os.environ["DB_USER"] or "dataload_test"
-database_name = os.environ["DB_NAME"] or "dataload_test"
-database_port = os.environ["DB_PORT"] or "3306"
-database_host = os.environ["DB_HOST"] or "database"
+database_password = os.environ.get("DB_PASS") or "secretpassword"
+database_user = os.environ.get("DB_USER") or "dataload_test"
+database_name = os.environ.get("DB_NAME") or "dataload_test"
+database_port = os.environ.get("DB_PORT") or "3306"
+database_host = os.environ.get("DB_HOST") or "database"
 
 
 database_url = (
