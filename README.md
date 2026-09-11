@@ -20,11 +20,14 @@ This project boasts the most modern and opinionated tech stack you could imagine
 
 ## FAQ
 
-**Q:** Why so much Nix?
+> **Q:** Why so much Nix?
+
 **A:** Yeah, I basically brought what would've been your classic array of `pyproject.toml`, `docker-compose.yaml` and `Dockerfile`, three very different syntaxes, into a single, coherent language. Nix is intimidating at first but once you get used to it you really don't want to leave it. With a little bit of upfront effort, packaging your application is solved, forever.
 
-**Q:** When will you write tests?
+> **Q:** When will you write tests?
+
 **A:** Whenever the domain grows large enough for tests to become worth the effort (In other words, never).
 
-**Q:** Will there ever be a Rust rewrite?
+> **Q:** Will there ever be a Rust rewrite?
+
 **A:** Yeah why not.
