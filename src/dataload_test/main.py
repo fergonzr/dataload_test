@@ -4,9 +4,10 @@ from datetime import datetime
 from typing import Annotated
 
 from fastapi import Depends, FastAPI
-from sqlmodel import Session
+from sqlmodel import Session, select
 
-from .models import Measurement, engine
+from .context import engine
+from .models import Measurement
 
 logging.basicConfig(
     level=logging.INFO,
@@ -32,8 +33,13 @@ SessionDep = Annotated[Session, Depends(get_session)]
 
 @app.post("/data")
 async def receive_data(measurement: Measurement, session: SessionDep) -> Measurement:
-    logger.info(measurement.timestamp.__class__)
+    copy = measurement.model_copy()
     session.add(measurement)
     session.commit()
-    session.refresh(measurement)
-    return measurement
+    return copy
+
+
+@app.get("/data")
+async def send_all_data(session: SessionDep):
+    measurements = session.exec(select(Measurement)).all()
+    return measurements

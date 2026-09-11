@@ -26,6 +26,7 @@
         pythonDist = pkgs.${pythonVer}.withPackages pythonDeps;
         packages = with pkgs; [
           fastapi-cli
+          arion
           pythonDist
         ];
         name = "dataload_test";
@@ -34,22 +35,12 @@
         devShell = pkgs.mkShell {
           packages = packages;
         };
-        packages.default = pkgs.${pythonPacks}.buildPythonApplication {
-          pname = name;
-          version = "0.1.0";
-          src = ./src;
-          pyproject = true;
-          build-system = [ pkgs.${pythonPacks}.setuptools ];
-
-          propagatedBuildInputs = pythonDeps pkgs.${pythonPacks};
-          postInstall = ''
-            cp $out/bin/run.py $out/bin/dataload_test
-          '';
-        };
+        packages.default = pkgs.callPackage ./package.nix { };
         packages.dockerImage = pkgs.dockerTools.buildImage {
           inherit name;
+          tag = "latest";
           config = {
-            Cmd = [ "${pkgs.fastapi-cli} dev" ];
+            Cmd = [ "${self.packages.x86_64-linux.default}/bin/dataload_test" ];
           };
         };
       }
