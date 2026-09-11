@@ -4,6 +4,9 @@ from sqlmodel import Field, SQLModel, create_engine
 
 
 class Measurement(SQLModel, table=True):
+    class Config:
+        validate_assignment = True
+
     timestamp: datetime = Field(default=None, primary_key=True)
     temperature: float
     humidity: float
